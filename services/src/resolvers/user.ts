@@ -1,9 +1,9 @@
 import { Arg, Int, Mutation, Query } from 'type-graphql';
 import { User } from '../entities';
 
-export class UserResolver {
+class UserResolver {
 	@Query(() => [User])
-	async getUserList(): Promise<Array<User>> {
+	async listUsers(): Promise<Array<User>> {
 		try {
 			const result = User.find();
 
@@ -14,7 +14,7 @@ export class UserResolver {
 	}
 
 	@Query(() => User, { nullable: true })
-	async getUserById(@Arg('id', () => Int) id: number): Promise<User | null> {
+	async getUser(@Arg('id', () => Int) id: number): Promise<User | null> {
 		try {
 			const result = await User.findOne(id);
 
@@ -77,7 +77,7 @@ export class UserResolver {
 		countryCode: string,
 	): Promise<User> {
 		try {
-			const user = await this.getUserById(id);
+			const user = await this.getUser(id);
 
 			const userData = {
 				firstName,
@@ -116,7 +116,7 @@ export class UserResolver {
 		countryCode: string,
 	): Promise<User> {
 		try {
-			const user = await this.getUserById(id);
+			const user = await this.getUser(id);
 
 			if (user) {
 				const userData = {
@@ -151,7 +151,7 @@ export class UserResolver {
 	}
 
 	@Mutation(() => Boolean)
-	async deleteById(
+	async deleteUser(
 		@Arg('id', () => Int)
 		id: number,
 	): Promise<Boolean> {
@@ -167,3 +167,5 @@ export class UserResolver {
 		}
 	}
 }
+
+export default UserResolver;
