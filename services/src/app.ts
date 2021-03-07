@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import { createConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
-import { HelloResolver, UserResolver } from './resolvers';
+import { UserResolver } from './resolvers';
 import { apiConf, dbConf, typeormConf } from './config';
 
 import { baseRouter, dbRouter, userRouter } from './routes';
@@ -26,7 +26,7 @@ export default async (): Promise<void> => {
 
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver, UserResolver],
+			resolvers: [UserResolver],
 			validate: false,
 		}),
 		context: () => ({ em: em }),

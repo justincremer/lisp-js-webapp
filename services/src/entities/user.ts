@@ -33,7 +33,7 @@ class User extends BaseEntity {
 
 	@Field(() => String)
 	@Column({ type: 'varchar', length: '32', unique: true })
-	username: string;
+	userName: string;
 
 	@Field(() => String)
 	@Column({ type: 'varchar', length: '64', unique: true })
@@ -41,7 +41,7 @@ class User extends BaseEntity {
 
 	@Field(() => String)
 	@Column({ type: 'varchar', length: '15', unique: true, nullable: true })
-	phoneNumber: string;
+	phone: string;
 
 	@Field(() => String)
 	@Column({ type: 'varchar', length: '5', nullable: true })
