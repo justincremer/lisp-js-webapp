@@ -1,8 +1,12 @@
 import { Query } from 'type-graphql';
 
-export class testResolver {
+import { UserResolver } from './user';
+
+export class HelloResolver {
 	@Query(() => String)
-	test() {
+	hello() {
 		return 'hello world';
 	}
 }
+
+export { UserResolver };

@@ -13,10 +13,10 @@ class SourceFile extends BaseEntity {
 	id!: string;
 
 	@CreateDateColumn()
-	createdAt = new Date();
+	createdAt!: Date;
 
 	@UpdateDateColumn()
-	updatedAt = new Date();
+	updatedAt!: Date;
 
 	@Column('text', { nullable: true })
 	title!: string;

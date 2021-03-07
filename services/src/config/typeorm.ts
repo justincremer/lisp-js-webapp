@@ -1,17 +1,16 @@
 import { createConnection } from 'typeorm';
 import { dbConf } from '.';
-import { SourceFile } from '../entities';
+import { User, SourceFile } from '../entities';
 import path from 'path';
 import { root } from '../utils';
 
 export default {
 	type: 'postgres',
-
 	...dbConf,
-	entities: [SourceFile],
+	entities: [User, SourceFile],
 	migrationsTableName: 'source_file_migration_table',
 	migrations: ['.ts', '.js'].map((e) =>
-		path.resolve(root, 'sevices', `migrations/*${e}`),
+		path.resolve(root, 'sevices', `migrations/*.{js, ts}`),
 	),
 	logging: true,
 	synchronize: true,

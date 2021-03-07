@@ -1,39 +1,51 @@
 import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchemaSync } from 'type-graphql';
 
+import http from 'http';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 
-import indexRouter from './routes/index';
-import userRouter from './routes/users';
-import dbRouter from './routes/db';
+import { createConnection } from 'typeorm';
+import { buildSchema } from 'type-graphql';
+import { HelloResolver, UserResolver } from './resolvers';
+import { apiConf, dbConf, typeormConf } from './config';
 
-import orm from './orm';
-import { testResolver } from './resolvers';
+import { baseRouter, dbRouter, userRouter } from './routes';
 
-orm();
+export default async (): Promise<void> => {
+	const connection = await createConnection(typeormConf);
+	const em = connection.manager;
 
-const app = express();
+	connection.runMigrations();
 
-// Add top level async wrapper to use 'await buildSchema'
-let apolloServer = new ApolloServer({
-	schema: buildSchemaSync({
-		resolvers: [testResolver],
-		validate: false,
-	}),
-});
+	const app = express();
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+	const port = apiConf.port ?? '8000';
+	app.set('port', port);
 
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/pg', dbRouter);
+	const apolloServer = new ApolloServer({
+		schema: await buildSchema({
+			resolvers: [HelloResolver, UserResolver],
+			validate: false,
+		}),
+		context: () => ({ em: em }),
+	});
 
-apolloServer.applyMiddleware({ app });
+	app.use(logger('dev'));
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: true }));
+	app.use(cookieParser());
 
-export default app;
+	app.use('/', baseRouter);
+	app.use('/db', dbRouter);
+	app.use('/users', userRouter);
+
+	apolloServer.applyMiddleware({ app });
+
+	http.createServer(app).listen(port, () => {
+		console.log(`\nServer listening on http://localhost:${port}`);
+		console.log(`Graphql listening on http://localhost:${port}/graphql`);
+		console.log(`Database listening on db://localhost:${dbConf.port}\n`);
+	});
+};
