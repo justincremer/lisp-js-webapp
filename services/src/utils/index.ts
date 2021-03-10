@@ -1,3 +1,2 @@
-import root from './root';
-
-export { root };
+export { root } from './root';
+export { hashPass, verifyPass } from './auth';

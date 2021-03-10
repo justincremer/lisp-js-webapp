@@ -24,28 +24,31 @@ class User extends BaseEntity {
 	updatedAt!: Date;
 
 	@Field(() => String)
-	@Column({ type: 'varchar', length: '64' })
-	firstName: string;
-
-	@Field(() => String)
-	@Column({ type: 'varchar', length: '64' })
-	lastName: string;
-
-	@Field(() => String)
 	@Column({ type: 'varchar', length: '32', unique: true })
-	userName: string;
+	username: string;
 
 	@Field(() => String)
 	@Column({ type: 'varchar', length: '64', unique: true })
 	email: string;
 
-	@Field(() => String)
-	@Column({ type: 'varchar', length: '15', unique: true, nullable: true })
+	@Column({ type: 'varchar', length: '128' })
+	password: string;
+
+	@Field(() => String, { nullable: true })
+	@Column({ type: 'varchar', length: '64', nullable: true })
+	firstname: string;
+
+	@Field(() => String, { nullable: true })
+	@Column({ type: 'varchar', length: '64', nullable: true })
+	lastname: string;
+
+	@Field(() => String, { nullable: true })
+	@Column({ type: 'varchar', length: '16', unique: true, nullable: true })
 	phone: string;
 
-	@Field(() => String)
-	@Column({ type: 'varchar', length: '5', nullable: true })
+	@Field(() => String, { nullable: true })
+	@Column({ type: 'varchar', length: '8', nullable: true })
 	countryCode: string;
 }
 
-export default User;
+export { User };

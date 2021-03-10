@@ -1,5 +1,3 @@
-import User from './user';
-import Post from './post';
-import SourceFile from './source-file';
-
-export { User, Post, SourceFile };
+export { User } from './user';
+export { Post } from './post';
+export { SourceFile } from './source-file';

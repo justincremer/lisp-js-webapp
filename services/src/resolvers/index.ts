@@ -1,4 +1,2 @@
-import UserResolver from './user';
-import PostResolver from './post';
-
-export { UserResolver, PostResolver };
+export { UserResolver } from './user';
+export { PostResolver } from './post';

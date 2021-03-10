@@ -28,4 +28,4 @@ class Post extends BaseEntity {
 	content: string;
 }
 
-export default Post;
+export { Post };

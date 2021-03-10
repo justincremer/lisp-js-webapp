@@ -1,7 +1,7 @@
 import { Arg, Int, Mutation, Query } from 'type-graphql';
 import { Post } from '../entities';
 
-class PostResolver {
+export class PostResolver {
 	@Query(() => [Post])
 	async listPosts(): Promise<Array<Post>> {
 		try {
@@ -105,5 +105,3 @@ class PostResolver {
 		}
 	}
 }
-
-export default PostResolver;

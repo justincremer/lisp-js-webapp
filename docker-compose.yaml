@@ -3,7 +3,8 @@ version: "3.7"
 services:
   db:
     image: postgres
-    container_name: ljs-db
+    container_name: ljs-postgres
+    # restart: always
     restart: unless-stopped
     env_file:
       - postgres.env
@@ -11,6 +12,27 @@ services:
       - pg-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+  redis:
+    image: redis
+    container_name: ljs-redis
+    # restart: always
+    restart: unless-stopped
+    env_file:
+      - redis.env
+    ports:
+      - 6379:6379
+
+  # api:
+  #   build: ./services
+  #   command: 
+  #     sh -c 'yarn && yarn build && yarn start'
+  #   env_file: 
+  #     - api.env
+  #   volumes:
+  #     - ./services:/var/www/api
+  #   ports:
+  #     - 3001:3001
 
 volumes:
   pg-data:

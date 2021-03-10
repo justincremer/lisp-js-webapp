@@ -4,10 +4,6 @@ import { root } from './utils';
 
 dotenv.config({ path: path.join(root, '.env') });
 
-import app from './app';
+import { app } from './app';
 
-try {
-	app();
-} catch (e) {
-	console.log(e);
-}
+app();

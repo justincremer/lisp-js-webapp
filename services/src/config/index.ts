@@ -1,5 +1,4 @@
-import apiConf from './api';
-import dbConf from './database';
-import typeormConf from './typeorm';
-
-export { apiConf, dbConf, typeormConf };
+export { apiConf } from './api';
+export { dbConf } from './database';
+export { ormConf } from './typeorm';
+export { redisConf } from './redis';

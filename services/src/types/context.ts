@@ -1,5 +1,11 @@
 import { EntityManager } from 'typeorm';
+import { Request, Response } from 'express';
+import { Session } from 'express-session';
 
-export type Context = {
+type Context = {
 	em: EntityManager;
+	req: Request & { session?: Session & { userId?: number } };
+	res: Response;
 };
+
+export { Context };

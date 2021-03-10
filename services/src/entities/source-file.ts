@@ -22,4 +22,4 @@ class SourceFile extends BaseEntity {
 	title!: string;
 }
 
-export default SourceFile;
+export { SourceFile };

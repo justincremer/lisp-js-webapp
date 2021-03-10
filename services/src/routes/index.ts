@@ -1,13 +1,16 @@
 import express from 'express';
 
-import dbRouter from './db';
-import userRouter from './users';
+import { userRouter } from './user';
+import { postRouter } from './post';
 
-const baseRouter = express.Router();
+const router = express.Router();
 
-baseRouter.get('/', (_, res) => {
+router.route('/').get((_, res) => {
 	const result = { message: 'Welcome to you Express API template' };
 	res.status(200).json(result);
 });
 
-export { baseRouter, dbRouter, userRouter };
+router.use('/user', userRouter);
+router.use('/post', postRouter);
+
+export { router };

@@ -1,3 +1,5 @@
 import path from 'path';
 
-export default path.dirname(process.cwd());
+const root = path.dirname(process.cwd());
+
+export { root };
