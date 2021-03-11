@@ -1,2 +1,7 @@
-export { UserInput, UserLoginInput, UserResponse } from './user';
+export {
+	UserInput,
+	UserLoginInput,
+	UserResponse,
+	UserListResponse,
+} from './user';
 export { PostInput } from './post';

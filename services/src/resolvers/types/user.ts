@@ -42,7 +42,17 @@ class UserResponse {
 	@Field(() => User, { nullable: true })
 	user?: User;
 	@Field(() => [FieldError], { nullable: true })
-	errors?: Array<FieldError> = [];
+	errors: Array<FieldError> = [];
 }
 
-export { UserInput, UserLoginInput, UserResponse };
+@ObjectType()
+class UserListResponse {
+	@Field(() => String, { nullable: true })
+	status?: string;
+	@Field(() => [User], { nullable: true })
+	userList: Array<User> = [];
+	@Field(() => [FieldError], { nullable: true })
+	errors: Array<FieldError> = [];
+}
+
+export { UserInput, UserLoginInput, UserResponse, UserListResponse };

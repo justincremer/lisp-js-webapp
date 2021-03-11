@@ -19,7 +19,7 @@ const primitives = {
 	'*': (x, y) => x * y,
 	'/': (x, y) => (y !== 0 ? x / y : 'Infinity, and not the good kind'),
 
-	'=': (x, y) => x == y,
+	'=': (x, y) => x === y,
 	'>': (x, y) => x > y,
 	'<': (x, y) => x < y,
 	'>=': (x, y) => x >= y,

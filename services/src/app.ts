@@ -10,6 +10,7 @@ import { createConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { PostResolver, UserResolver } from './resolvers';
 
+import cors from 'cors';
 import http from 'http';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -43,6 +44,12 @@ const app = async (): Promise<void> => {
 	});
 
 	app.use(logger('dev'))
+		.use(
+			cors({
+				origin: 'http://localhost:3000',
+				credentials: true,
+			}),
+		)
 		.use(express.json())
 		.use(express.urlencoded({ extended: true }))
 		.use(cookieParser())
@@ -66,7 +73,11 @@ const app = async (): Promise<void> => {
 		)
 		.use(router);
 
-	apolloServer.applyMiddleware({ app });
+	apolloServer.applyMiddleware({
+		app,
+		// cors: { origin: 'http://localhost:3000' },
+		cors: false,
+	});
 
 	http.createServer(app).listen(port, () => {
 		console.log(`\nServer listening on http://localhost:${port}`);

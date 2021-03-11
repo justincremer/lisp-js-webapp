@@ -2,16 +2,28 @@ import { Arg, Ctx, Int, Mutation, Query } from 'type-graphql';
 
 import { User } from '../entities';
 import { hashPass, verifyPass } from '../utils';
-import { UserInput, UserLoginInput, UserResponse } from './types';
+import {
+	UserInput,
+	UserLoginInput,
+	UserResponse,
+	UserListResponse,
+} from './types';
 import { Context } from '../types';
 
 export class UserResolver {
-	@Query(() => [User])
-	async listUsers(): Promise<Array<User>> {
-		const users = await User.find();
-		const response = users.map((u) => u);
+	@Query(() => UserListResponse)
+	async listUsers(): Promise<UserListResponse> {
+		try {
+			let response: UserListResponse = new UserListResponse();
 
-		return response;
+			response.status = 'Success';
+			const userList = await User.find();
+			userList.forEach((u) => response.userList.push(u));
+
+			return response;
+		} catch (e) {
+			throw new Error(e);
+		}
 	}
 
 	@Query(() => UserResponse)
@@ -84,6 +96,7 @@ export class UserResolver {
 	@Mutation(() => UserResponse)
 	async registerUser(
 		@Arg('input', () => UserLoginInput) input: UserLoginInput,
+		@Ctx() { req, res }: Context,
 	): Promise<UserResponse> {
 		try {
 			const { email, username, password } = input;
@@ -124,11 +137,12 @@ export class UserResolver {
 					const user = User.create(input);
 					await User.save(user);
 
-					response.status = 'Failure';
+					response.status = 'Success';
 					response.user = user;
 				}
 			}
 
+			// res.send(response);
 			return response;
 		} catch (e) {
 			throw new Error(e);
@@ -230,6 +244,33 @@ export class UserResolver {
 		}
 	}
 
+	@Mutation(() => UserListResponse)
+	async deleteAllUsers(): Promise<UserResponse> {
+		// Deletes everyone except scoob!
+		try {
+			let response: UserListResponse = new UserListResponse();
+			const { userList } = await this.listUsers();
+			let deletedUsers: Array<User> = new Array<User>();
+
+			userList.forEach(async (u) => {
+				if (u.email !== 'scoobert@xiubox.io') {
+					const deleted = await this.deleteUserById(u.id);
+					const { user, status } = deleted;
+					if (status === 'Success') {
+						deletedUsers.push(user!);
+					}
+				}
+			});
+
+			response.status = 'Success';
+			response.userList = deletedUsers;
+
+			return response;
+		} catch (e) {
+			throw new Error(e);
+		}
+	}
+
 	// @Mutation(() => User)
 	// async upsertUser(
 	// 	@Arg('id', () => Int)
@@ -266,18 +307,18 @@ export class UserResolver {
 	// }
 
 	@Query(() => UserResponse, { nullable: true })
-	async whoAmI(@Ctx() { req }: Context) {
+	async getCurrentUser(@Ctx() { req }: Context) {
 		let response: UserResponse = new UserResponse();
-		let session = req.session;
+		let { userId } = req.session;
 
-		if (!session.userId) {
+		if (!userId) {
 			response.status = 'Failure';
 			response.errors!.push({
 				field: 'user',
 				message: 'Not logged in',
 			});
 		} else {
-			response = await this.getUserById(session.userId, req);
+			response = await this.getUserById(userId, req);
 		}
 
 		return response;
