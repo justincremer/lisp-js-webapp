@@ -1,17 +1,16 @@
 import React from 'react';
 
+import { PageWrapper, GridWrapper } from './wrappers';
 import {
-	PageWrapper,
-	GridWrapper,
 	AdBlock,
 	TitlePanel,
 	Interpreter,
 	FileExplorer,
 	Navigator,
 	ComponentGridItem,
-} from '.';
+} from './components';
 
-const Editor = (): React.ReactElement => (
+const Editor = (): JSX.Element => (
 	<PageWrapper>
 		<GridWrapper>
 			<ComponentGridItem r={4} c={1} component={<FileExplorer />} />

@@ -1,0 +1,18 @@
+query GetCurrentUser {
+	getCurrentUser {
+		status
+		errors {
+			field
+			message
+		}
+		user {
+			id
+			username
+			email
+			firstname
+			lastname
+			phone
+			countryCode
+		}
+	}
+}

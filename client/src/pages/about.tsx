@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Center, Heading } from '@chakra-ui/react';
 
-import { GridWrapper, PageWrapper, ComponentGridItem, Navigator } from '.';
+import { ComponentGridItem, Navigator } from './components';
+import { GridWrapper, PageWrapper } from './wrappers';
 
 const Title = () => (
 	<Center>
@@ -12,7 +13,7 @@ const Title = () => (
 	</Center>
 );
 
-const About = (): React.ReactElement => (
+const About = (): JSX.Element => (
 	<PageWrapper>
 		<GridWrapper>
 			<ComponentGridItem r={4} c={1} />

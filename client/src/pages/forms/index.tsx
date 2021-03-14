@@ -1,1 +1,6 @@
-export { RegisterForm } from './register';
+export {
+	RegisterForm,
+	LoginForm,
+	LogoutForm,
+	CurrentUserForm,
+} from './account';

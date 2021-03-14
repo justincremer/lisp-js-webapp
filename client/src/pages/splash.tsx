@@ -2,7 +2,9 @@ import React from 'react';
 
 import { Center, Heading } from '@chakra-ui/react';
 
-import { PageWrapper, GridWrapper, ComponentGridItem, Navigator } from '.';
+import { ComponentGridItem, Navigator } from './components';
+import { PageWrapper, GridWrapper } from './wrappers';
+import { CurrentUserForm } from './forms';
 
 const Title = () => (
 	<Center>
@@ -18,7 +20,7 @@ const Splash = (): React.ReactElement => (
 			<ComponentGridItem r={4} c={1} />
 			<ComponentGridItem r={1} c={3} component={<Title />} />
 			<ComponentGridItem r={1} c={1} component={<Navigator />} />
-			<ComponentGridItem r={3} c={3} />
+			<ComponentGridItem r={3} c={3} component={<CurrentUserForm />} />
 			<ComponentGridItem r={3} c={1} />
 		</GridWrapper>
 	</PageWrapper>

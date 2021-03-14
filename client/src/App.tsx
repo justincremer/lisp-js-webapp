@@ -4,7 +4,7 @@ import { Provider, createClient } from 'urql';
 
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { Splash, Home, Editor, About } from './pages';
+import { Splash, Home, Editor, About, Register, Login, Logout } from './pages';
 import { theme } from './theme';
 
 const client = createClient({
@@ -22,6 +22,9 @@ const App: React.FC = () => (
 					<Route path="/" exact component={Splash} />
 					<Route path="/home" component={Home} />
 					<Route path="/editor" component={Editor} />
+					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
+					<Route path="/logout" component={Logout} />
 					<Route path="/about" component={About} />
 				</Switch>
 			</ChakraProvider>

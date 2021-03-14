@@ -21,7 +21,6 @@ export type Query = {
   listUsers: UserListResponse;
   getUserById: UserResponse;
   getUserByUsernameOrEmail: UserResponse;
-  authenticateUser: UserResponse;
   getCurrentUser?: Maybe<UserResponse>;
   listPosts: Array<Post>;
   getPost?: Maybe<Post>;
@@ -35,11 +34,6 @@ export type QueryGetUserByIdArgs = {
 
 export type QueryGetUserByUsernameOrEmailArgs = {
   input: UserInput;
-};
-
-
-export type QueryAuthenticateUserArgs = {
-  input: UserLoginInput;
 };
 
 
@@ -90,12 +84,6 @@ export type UserInput = {
   countryCode?: Maybe<Scalars['String']>;
 };
 
-export type UserLoginInput = {
-  username?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  password: Scalars['String'];
-};
-
 export type Post = {
   __typename?: 'Post';
   id: Scalars['Int'];
@@ -107,6 +95,7 @@ export type Post = {
 export type Mutation = {
   __typename?: 'Mutation';
   registerUser: UserResponse;
+  authenticateUser: UserResponse;
   updateUser: UserResponse;
   deleteUserById: UserResponse;
   deleteAllUsers: UserListResponse;
@@ -118,6 +107,11 @@ export type Mutation = {
 
 
 export type MutationRegisterUserArgs = {
+  input: UserLoginInput;
+};
+
+
+export type MutationAuthenticateUserArgs = {
   input: UserLoginInput;
 };
 
@@ -154,6 +148,34 @@ export type MutationDeletePostArgs = {
   id: Scalars['Int'];
 };
 
+export type UserLoginInput = {
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+};
+
+export type AuthenticateMutationVariables = Exact<{
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type AuthenticateMutation = (
+  { __typename?: 'Mutation' }
+  & { authenticateUser: (
+    { __typename?: 'UserResponse' }
+    & Pick<UserResponse, 'status'>
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'email' | 'firstname' | 'lastname' | 'phone' | 'countryCode'>
+    )> }
+  ) }
+);
+
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
   username: Scalars['String'];
@@ -176,7 +198,51 @@ export type RegisterMutation = (
   ) }
 );
 
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type GetCurrentUserQuery = (
+  { __typename?: 'Query' }
+  & { getCurrentUser?: Maybe<(
+    { __typename?: 'UserResponse' }
+    & Pick<UserResponse, 'status'>
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username' | 'email' | 'firstname' | 'lastname' | 'phone' | 'countryCode'>
+    )> }
+  )> }
+);
+
+
+export const AuthenticateDocument = gql`
+    mutation Authenticate($email: String!, $username: String!, $password: String!) {
+  authenticateUser(
+    input: {email: $email, username: $username, password: $password}
+  ) {
+    status
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      username
+      email
+      firstname
+      lastname
+      phone
+      countryCode
+    }
+  }
+}
+    `;
+
+export function useAuthenticateMutation() {
+  return Urql.useMutation<AuthenticateMutation, AuthenticateMutationVariables>(AuthenticateDocument);
+};
 export const RegisterDocument = gql`
     mutation Register($email: String!, $username: String!, $password: String!) {
   registerUser(input: {email: $email, username: $username, password: $password}) {
@@ -200,4 +266,28 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const GetCurrentUserDocument = gql`
+    query GetCurrentUser {
+  getCurrentUser {
+    status
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      username
+      email
+      firstname
+      lastname
+      phone
+      countryCode
+    }
+  }
+}
+    `;
+
+export function useGetCurrentUserQuery(options: Omit<Urql.UseQueryArgs<GetCurrentUserQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<GetCurrentUserQuery>({ query: GetCurrentUserDocument, ...options });
 };

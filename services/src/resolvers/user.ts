@@ -142,14 +142,13 @@ export class UserResolver {
 				}
 			}
 
-			// res.send(response);
 			return response;
 		} catch (e) {
 			throw new Error(e);
 		}
 	}
 
-	@Query(() => UserResponse)
+	@Mutation(() => UserResponse)
 	async authenticateUser(
 		@Arg('input', () => UserLoginInput) input: UserLoginInput,
 		@Ctx() { req }: Context,
@@ -157,10 +156,12 @@ export class UserResolver {
 		try {
 			let response: UserResponse = new UserResponse();
 			const { email, username, password } = input;
-			const result = await this.getUserByUsernameOrEmail({
-				email,
-				username,
-			});
+			const params = {
+				email: email,
+				username: username,
+			};
+
+			const result = await this.getUserByUsernameOrEmail(params);
 			const user = result.user;
 
 			if (user) {

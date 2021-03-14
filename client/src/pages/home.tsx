@@ -1,12 +1,8 @@
 import { Center, Heading } from '@chakra-ui/react';
 
-import {
-	PageWrapper,
-	GridWrapper,
-	RegisterForm,
-	ComponentGridItem,
-	Navigator,
-} from '.';
+import { ComponentGridItem, Navigator } from './components';
+import { PageWrapper, GridWrapper } from './wrappers';
+import { RegisterForm } from './forms';
 
 const Title = () => (
 	<Center>
