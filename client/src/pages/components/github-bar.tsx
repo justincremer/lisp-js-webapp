@@ -34,4 +34,4 @@ const GithubBar = (): React.ReactElement => (
 	</Center>
 );
 
-export default GithubBar;
+export { GithubBar };

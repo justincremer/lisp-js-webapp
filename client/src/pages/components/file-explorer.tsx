@@ -51,4 +51,4 @@ const FileExplorer = (): React.ReactElement => (
 	</Box>
 );
 
-export default FileExplorer;
+export { FileExplorer };

@@ -1,25 +1,29 @@
-import React from 'react';
-
-import { PageWrapper, GridWrapper } from './wrappers';
+import { GridWrapper } from './wrappers';
 import {
 	AdBlock,
-	TitlePanel,
 	Interpreter,
 	FileExplorer,
-	Navigator,
 	ComponentGridItem,
 } from './components';
+import { Box, Center, Heading } from '@chakra-ui/react';
+
+const Title = () => (
+	<Center pt={10}>
+		<Heading as="h1" size="4xl" margin="1rem">
+			Editor page
+		</Heading>
+	</Center>
+);
 
 const Editor = (): JSX.Element => (
-	<PageWrapper>
-		<GridWrapper>
-			<ComponentGridItem r={4} c={1} component={<FileExplorer />} />
-			<ComponentGridItem r={1} c={3} component={<TitlePanel />} />
-			<ComponentGridItem r={1} c={1} component={<Navigator />} />
-			<ComponentGridItem r={3} c={3} component={<Interpreter />} />
-			<ComponentGridItem r={3} c={1} component={<AdBlock />} />
+	<Box>
+		<Title />
+		<GridWrapper rows={4} columns={6}>
+			<ComponentGridItem r={6} c={1} component={<FileExplorer />} />
+			<ComponentGridItem r={6} c={4} component={<Interpreter />} />
+			<ComponentGridItem r={6} c={1} component={<AdBlock />} />
 		</GridWrapper>
-	</PageWrapper>
+	</Box>
 );
 
 export { Editor };

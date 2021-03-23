@@ -3,6 +3,4 @@ coverage
 build
 dist
 
-**/*.env
-
 scoob.txt

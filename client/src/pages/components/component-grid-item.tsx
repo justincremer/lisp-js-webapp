@@ -8,7 +8,8 @@ const ComponentGridItem = (props: {
 }): React.ReactElement => {
 	const { r, c, component } = props;
 
-	const boxShadow = 'dark-lg';
+	// const boxShadow = 'dark-lg';
+	const boxShadow = 'lg';
 	const boxColor = '#ffffff';
 
 	return (
@@ -25,4 +26,4 @@ const ComponentGridItem = (props: {
 	);
 };
 
-export default ComponentGridItem;
+export { ComponentGridItem };

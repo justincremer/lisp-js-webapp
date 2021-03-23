@@ -50,4 +50,4 @@ const TitlePanel = (): React.ReactElement => (
 	</Box>
 );
 
-export default TitlePanel;
+export { TitlePanel };

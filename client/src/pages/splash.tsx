@@ -15,15 +15,13 @@ const Title = () => (
 );
 
 const Splash = (): React.ReactElement => (
-	<PageWrapper>
-		<GridWrapper>
-			<ComponentGridItem r={4} c={1} />
-			<ComponentGridItem r={1} c={3} component={<Title />} />
-			<ComponentGridItem r={1} c={1} component={<Navigator />} />
-			<ComponentGridItem r={3} c={3} component={<CurrentUserForm />} />
-			<ComponentGridItem r={3} c={1} />
-		</GridWrapper>
-	</PageWrapper>
+	<GridWrapper rows={4} columns={5}>
+		<ComponentGridItem r={4} c={1} />
+		<ComponentGridItem r={1} c={3} component={<Title />} />
+		<ComponentGridItem r={1} c={1} component={<Navigator />} />
+		<ComponentGridItem r={3} c={3} component={<CurrentUserForm />} />
+		<ComponentGridItem r={3} c={1} />
+	</GridWrapper>
 );
 
 export { Splash };

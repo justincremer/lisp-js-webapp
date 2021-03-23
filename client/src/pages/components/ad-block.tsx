@@ -32,4 +32,4 @@ const AdBlock = (): React.ReactElement => {
 	);
 };
 
-export default AdBlock;
+export { AdBlock };

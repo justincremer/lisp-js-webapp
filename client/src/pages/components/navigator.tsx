@@ -32,4 +32,4 @@ const Navigator = (): React.ReactElement => (
 	</Box>
 );
 
-export default Navigator;
+export { Navigator };

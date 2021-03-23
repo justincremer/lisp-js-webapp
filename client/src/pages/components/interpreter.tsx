@@ -48,4 +48,4 @@ const Interpreter = (): React.ReactElement => {
 	);
 };
 
-export default Interpreter;
+export { Interpreter };

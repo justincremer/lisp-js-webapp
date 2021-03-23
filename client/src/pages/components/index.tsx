@@ -1,17 +1,8 @@
-import GithubBar from './github-bar';
-import AdBlock from './ad-block';
-import TitlePanel from './title-panel';
-import Interpreter from './interpreter';
-import FileExplorer from './file-explorer';
-import Navigator from './navigator';
-import ComponentGridItem from './component-grid-item';
-
-export {
-	GithubBar,
-	AdBlock,
-	TitlePanel,
-	Interpreter,
-	FileExplorer,
-	Navigator,
-	ComponentGridItem,
-};
+export { ComponentGridItem } from './component-grid-item';
+export { FileExplorer } from './file-explorer';
+export { Interpreter } from './interpreter';
+export { TitlePanel } from './title-panel';
+export { GithubBar } from './github-bar';
+export { Navigator } from './navigator';
+export { AdBlock } from './ad-block';
+export { NavBar } from './nav-bar';
